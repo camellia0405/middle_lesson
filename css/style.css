@@ -71,13 +71,16 @@ img {
 .carousel__item {
   display: none;
   width: 100%;
+  aspect-ratio: 16/9;
 }
 .carousel__item:first-child {
   display: block;
 }
 .carousel__image {
   width: 100%;
-  height: auto;
+  height: 600px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .carousel__controls {
   position: absolute;

@@ -1,170 +1,171 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <link rel="stylesheet" href="./css/style.css">
-    <title>夜明けのプリン</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+  <link rel="stylesheet" href="./css/style.css">
+  <title>夜明けのプリン</title>
 </head>
 <body>
-    <!-- ヘッダーセクション -->
-    <header class="header">
-        <div class="header__inner">
-            <nav class="header__nav">
-                <ul class="header__nav-list">
-                    <li class="header__nav-item">
-                        <a href="#" class="header__nav-link">Category</a>
-                    </li>
-                    <li class="header__nav-item">
-                        <a href="#" class="header__nav-link">Menu</a>
-                    </li>
-                </ul>
-            </nav>
-            <h1 class="header__logo">
-                <a href="#">
-                    <img src="./img/logo2.png" alt="夜明けのプリン" class="header__logo-image">
-                </a>
-            </h1>
-            <div class="header__icons">
-                <a href="#" aria-label="カート">
-                    <img src="./img/cart.png" alt="カートアイコン" class="header__icon-image">
-                </a>
-                <a href="#" aria-label="マイページ">
-                    <img src="./img/account.png" alt="ユーザーアイコン" class="header__icon-image">
-                </a>
-            </div>
+  <!-- ヘッダーセクション -->
+  <header class="header">
+    <div class="header__inner">
+      <nav class="header__nav">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a href="#" class="header__nav-link">Category</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="#" class="header__nav-link">Menu</a>
+          </li>
+        </ul>
+      </nav>
+      <h1 class="header__logo">
+        <a href="#">
+          <img src="./img/logo2.png" alt="夜明けのプリン" class="header__logo-image">
+        </a>
+      </h1>
+      <div class="header__icons">
+        <a href="#" aria-label="カート">
+          <img src="./img/cart.png" alt="カートアイコン" class="header__icon-image">
+        </a>
+        <a href="#" aria-label="マイページ">
+          <img src="./img/account.png" alt="ユーザーアイコン" class="header__icon-image">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- メインビジュアル（カルーセル）セクション -->
+    <section class="main-visual" aria-label="おすすめ商品カルーセル">
+      <div class="carousel">
+        <div class="carousel__item">
+          <img src="./img/main2.png" alt="商品画像1" class="carousel__image">
         </div>
-    </header>
-
-    <main class="main-content">
-        <!-- メインビジュアル（カルーセル）セクション -->
-        <section class="main-visual" aria-label="おすすめ商品カルーセル">
-            <div class="carousel">
-                <div class="carousel__item">
-                    <img src="./img/main2.png" alt="商品画像1" class="carousel__image">
-                </div>
-                <div class="carousel__item">
-                    <img src="./img/main.png" alt="商品画像2" class="carousel__image">
-                </div>
-                <div class="carousel__item">
-                    <img src="./img/season_ohagi01.jpg" alt="商品画像3" class="carousel__image">
-                </div>
-                <div class="carousel__controls">
-                    <button class="carousel__button carousel__button--prev" aria-label="前のスライド"></button>
-                    <button class="carousel__button carousel__button--next" aria-label="次のスライド"></button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 商品一覧セクション -->
-        <section class="products">
-            <h2 class="products__heading">Menu</h2>
-            <div class="products__grid">
-                <!-- 商品カードのコンポーネントを配置する場所 -->
-                <article class="product-card">
-                    <img src="./img/strawberry.png" alt="苺のプリン" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">苺のプリン</h3>
-                        <p class="product-card__description">
-                            とちおとめをふんだんに使ったミルクプリンです。
-                        </p>
-                        <p class="product-card__price">¥240(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-                <!-- 他の商品カードをここに追加 -->
-                <article class="product-card">
-                    <img src="./img/greentea.png" alt="抹茶のプリン" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">抹茶のプリン</h3>
-                        <p class="product-card__description">
-                            宇治抹茶の濃厚な香りを楽しめる逸品です。
-                        </p>
-                        <p class="product-card__price">¥240(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-                <article class="product-card">
-                    <img src="./img/banana.png" alt="バナナのプリン" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">バナナのプリン</h3>
-                        <p class="product-card__description">
-                            完熟バナナの甘みとつぶつぶの食感を味わえます。
-                        </p>
-                        <p class="product-card__price">¥240(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-                <article class="product-card">
-                    <img src="./img/pumpkin.png" alt="かぼちゃのプリン" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">かぼちゃのプリン</h3>
-                        <p class="product-card__description">
-                            かぼちゃの優しい甘さを感じられ、甘いのが苦手な方にもおすすめです。
-                        </p>
-                        <p class="product-card__price">¥240(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-                <article class="product-card">
-                    <img src="./img/season_sakura01.jpg" alt="桜マカロン" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">桜マカロン</h3>
-                        <p class="product-card__description">
-                            自家製シロップ漬けのクリームを挟んだ可愛いマカロンです。
-                        </p>
-                        <p class="product-card__price">¥180(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-                <article class="product-card">
-                    <img src="./img/season_shungiku01.jpg" alt="春菊のケークサレ" class="product-card__image">
-                    <div class="product-card__content">
-                        <h3 class="product-card__title">春菊のケークサレ</h3>
-                        <p class="product-card__description">
-                            フランス発祥の野菜のケーキです。クリームチーズと一緒にぜひ！
-                        </p>
-                        <p class="product-card__price">¥500(税込)</p>
-                        <button class="product-card__add-to-cart" aria-label="カートに入れる">
-                            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-                        </button>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- はじめての方へセクション -->
-        <section class="beginner-info">
-            <h2 class="beginner-info__heading">はじめてご利用する方へ</h2>
-            <div class="beginner-info__links">
-                <a href="#" class="beginner-info__link">お支払い方法について</a>
-                <a href="#" class="beginner-info__link">発送について</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- フッターセクション -->
-    <footer class="footer">
-        <div class="footer__inner">
-            <div class="footer__logo">
-                <img src="./img/logo2.png" alt="夜明けのプリン" class="footer__logo-image">
-            </div>
-            <address class="footer__address">
-                <p>〒000-0000</p>
-                <p>東京都●●区●●1-2-3</p>
-                <p>◆◆ビル 5F</p>
-            </address>
+        <div class="carousel__item">
+          <img src="./img/main.png" alt="商品画像2" class="carousel__image">
         </div>
-    </footer>
+        <div class="carousel__item">
+          <img src="./img/season_ohagi01.jpg" alt="商品画像3" class="carousel__image">
+        </div>
+        <div class="carousel__controls">
+          <button class="carousel__button carousel__button--prev" aria-label="前のスライド"></button>
+          <button class="carousel__button carousel__button--next" aria-label="次のスライド"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 商品一覧セクション -->
+    <section class="products">
+      <h2 class="products__heading">Menu</h2>
+      <div class="products__grid">
+        <!-- 商品カードのコンポーネントを配置する場所 -->
+        <article class="product-card">
+          <img src="./img/strawberry.png" alt="苺のプリン" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">苺のプリン</h3>
+            <p class="product-card__description">
+              とちおとめをふんだんに使ったミルクプリンです。
+            </p>
+            <p class="product-card__price">¥240(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+        <!-- 他の商品カードをここに追加 -->
+        <article class="product-card">
+          <img src="./img/greentea.png" alt="抹茶のプリン" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">抹茶のプリン</h3>
+            <p class="product-card__description">
+              宇治抹茶の濃厚な香りを楽しめる逸品です。
+            </p>
+            <p class="product-card__price">¥240(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="./img/banana.png" alt="バナナのプリン" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">バナナのプリン</h3>
+            <p class="product-card__description">
+              完熟バナナの甘みとつぶつぶの食感を味わえます。
+            </p>
+            <p class="product-card__price">¥240(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="./img/pumpkin.png" alt="かぼちゃのプリン" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">かぼちゃのプリン</h3>
+            <p class="product-card__description">
+              かぼちゃの優しい甘さを感じられ、甘いのが苦手な方にもおすすめです。
+            </p>
+            <p class="product-card__price">¥240(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="./img/season_sakura01.jpg" alt="桜マカロン" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">桜マカロン</h3>
+            <p class="product-card__description">
+              自家製シロップ漬けのクリームを挟んだ可愛いマカロンです。
+            </p>
+            <p class="product-card__price">¥180(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="./img/season_shungiku01.jpg" alt="春菊のケークサレ" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">春菊のケークサレ</h3>
+            <p class="product-card__description">
+              フランス発祥の野菜のケーキです。クリームチーズと一緒にぜひ！
+            </p>
+            <p class="product-card__price">¥500(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- はじめての方へセクション -->
+    <section class="beginner-info">
+      <h2 class="beginner-info__heading">はじめてご利用する方へ</h2>
+      <div class="beginner-info__links">
+        <a href="#" class="beginner-info__link">お支払い方法について</a>
+        <a href="#" class="beginner-info__link">発送について</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッターセクション -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">
+        <img src="./img/logo2.png" alt="夜明けのプリン" class="footer__logo-image">
+      </div>
+      <address class="footer__address">
+        <p>〒000-0000</p>
+        <p>東京都●●区●●1-2-3</p>
+        <p>◆◆ビル 5F</p>
+      </address>
+    </div>
+  </footer>
+  <script src="./js/main.js"></script>
 </body>
 </html>
