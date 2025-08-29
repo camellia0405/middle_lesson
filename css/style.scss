@@ -8,6 +8,11 @@ $color-gray: #eee;
 $container-width: 1000px;
 
 // グローバルスタイル
+
+* { 
+  box-sizing: border-box;
+}
+
 body {
 font-family: $font-family-base;
   color: $color-text;
@@ -227,7 +232,7 @@ img {
 // フッター (footer)
 .footer {
   width: 100% ;
-  padding: 40px;
+  padding: 20px;
   background-color: $color-primary;
   color: $color-light;
 
