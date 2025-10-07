@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -33,6 +34,11 @@ img {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 600px) {
+  .header__inner {
+    flex-direction: column;
+  }
+}
 .header__nav-list {
   display: flex;
   list-style: none;
@@ -53,15 +59,74 @@ img {
 .header__logo-image {
   height: 100px;
 }
+
+/* ---------- header icons: fixed top-right ---------- */
 .header__icons {
-  display: flex;
-  gap: 15px;
+  position: fixed;
+  top: 50px;
+  right: 70px;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  background: transparent;
 }
-.header__icon-image {
-  width: 45px;
-  height: 45px;
+.header__icons .icons__area {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
+/* アイコンの共通サイズ */
+.header__icon-image {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+/* カートアイコン（バッジの基準になる親） */
+.cart-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* バッジ */
+.cart-count {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  background-color: #e63946;
+  color: white;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* レスポンシブ（小さい画面ではアイコン小さめ、右下表示） */
+@media (max-width: 600px) {
+  .header__icons {
+    top: auto;
+    bottom: 30px;
+    right: 20px;
+  }
+  .header__icon-image {
+    width: 36px;
+    height: 36px;
+  }
+  .cart-count {
+    font-size: 10px;
+    padding: 3px 6px;
+    top: -4px;
+    right: -4px;
+  }
+}
 .main-content {
   margin-top: 20px;
 }
@@ -88,7 +153,7 @@ img {
 }
 .carousel__controls {
   position: absolute;
-  top: 50%;
+  top: 45%;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -103,6 +168,12 @@ img {
   font-size: 1.5rem;
 }
 
+/* レスポンシブ（小さい画面では非表示） */
+@media (max-width: 600px) {
+  .main-visual {
+    display: none;
+  }
+}
 .products {
   max-width: 1000px;
   margin: 50px auto;
@@ -118,13 +189,36 @@ img {
   gap: 20px;
 }
 
+/* レスポンシブ（小さい画面では1列） */
+@media (max-width: 600px) {
+  .products__grid {
+    width: 95%;
+    margin: 0 auto;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 .product-card {
+  position: relative;
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: left;
+}
+.product-card__count {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  background-color: #e63946;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  text-align: center;
+  min-width: 20px;
 }
 .product-card__image {
   width: 100%;
@@ -138,8 +232,7 @@ img {
 .product-card__title {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 5px;
+  margin: 0 0 5px;
 }
 .product-card__description {
   font-size: 1rem;
@@ -151,16 +244,33 @@ img {
   font-weight: bold;
   color: #8e7d73;
 }
-.product-card__add-to-cart {
+.product-card__cart-icon {
+  width: 35px;
+  height: 35px;
+}
+.product-card .product-card__add-to-cart {
+  position: relative;
   background-color: transparent;
   border: none;
   cursor: pointer;
   float: right;
   margin-bottom: 5px;
 }
-.product-card__cart-icon {
-  width: 35px;
-  height: 35px;
+.product-card .product-card__add-to-cart .product-card__count {
+  position: absolute;
+  top: -10px;
+  right: 17px;
+  display: none;
+  background-color: #e63946;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .beginner-info {
@@ -192,11 +302,17 @@ img {
   padding: 20px;
   background-color: #8e7d73;
   color: #fff;
+  /* レスポンシブ（小さい画面では1列） */
 }
 .footer__inner {
   display: flex;
   max-width: 1000px;
   margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .footer__inner {
+    flex-direction: column;
+  }
 }
 .footer__logo {
   width: 50%;

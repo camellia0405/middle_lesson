@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">  
+  <link rel="stylesheet" href="./css/cart.css">
+  <title>ショッピングカート | 夜明けのプリン</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <h1 class="header__logo">
+        <a href="index.html">
+          <img src="./img/logo2.png" alt="夜明けのプリン" class="header__logo-image">
+        </a>
+      </h1>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="cart">
+      <h2 class="cart__heading">ショッピングカート</h2>
+      <div class="cart__items" id="cart-items"></div>
+      <p class="cart__empty" id="empty-message">カートに商品はありません。</p>
+
+      <div class="cart__summary">
+        <p id="total-price">合計金額：¥0</p>
+        <button id="clear-cart" class="cart__clear">カートを空にする</button>
+      </div>
+
+      <a href="index.html" class="cart__back">← 買い物に戻る</a>
+    </section>
+  </main>
+
+  <script src="./js/cart.js"></script>
+</body>
+</html>

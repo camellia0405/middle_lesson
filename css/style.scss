@@ -46,6 +46,14 @@ img {
     align-items: center;
   }
 
+  @media (max-width: 600px) {
+    &__inner {
+      // display: flex;
+      flex-direction: column;
+    }
+  }
+
+
   &__nav-list {
     display: flex;
     list-style: none;
@@ -70,17 +78,65 @@ img {
   &__logo-image {
     height: 100px; // ロゴ画像の高さを調整
   }
+}
 
-  &__icons {
+/* ---------- header icons: fixed top-right ---------- */
+.header__icons {
+  position: fixed;
+  top: 50px; 
+  right: 70px;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  background: transparent; 
+
+  .icons__area {
     display: flex;
-    gap: 15px;
-  }
-
-  &__icon-image {
-    width: 45px;
-    height: 45px;
+    gap: 12px;
+    align-items: center;
   }
 }
+
+/* アイコンの共通サイズ */
+.header__icon-image {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+/* カートアイコン（バッジの基準になる親） */
+.cart-icon {
+  position: relative; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* バッジ */
+.cart-count {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  background-color: #e63946; 
+  color: white;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* レスポンシブ（小さい画面ではアイコン小さめ、右下表示） */
+@media (max-width: 600px) {
+  .header__icons { top: auto; bottom: 30px; right: 20px; }
+  .header__icon-image { width: 36px; height: 36px; }
+  .cart-count { font-size: 10px; padding: 3px 6px; top: -4px; right: -4px; }
+}
+
 
 // メインコンテンツ (main-content)
 .main-content {
@@ -97,7 +153,7 @@ img {
   &__item {
     display: none; // JavaScriptで表示を切り替える
     width: 100%;
-    aspect-ratio: 16 / 9; // 例えば横長スライドにしたい場合
+    aspect-ratio: 16 / 9; 
   }
 
   // 最初のアイテムをデフォルトで表示
@@ -113,7 +169,7 @@ img {
 
   &__controls {
     position: absolute;
-    top: 50%;
+    top: 45%;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -127,6 +183,13 @@ img {
     padding: 10px;
     cursor: pointer;
     font-size: 1.5rem;
+  }
+}
+
+/* レスポンシブ（小さい画面では非表示） */
+@media (max-width: 600px) {
+  .main-visual { 
+    display: none;
   }
 }
 
@@ -148,57 +211,75 @@ img {
   }
 }
 
+/* レスポンシブ（小さい画面では1列） */
+@media (max-width: 600px) {
+  .products__grid { 
+    width: 95%;
+    margin: 0 auto;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 // 商品カード (product-card)
 .product-card {
+  position: relative; // バッジ配置の基準
   border: 1px solid $color-gray;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   background-color: $color-light;
   text-align: left;
 
-  &__image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-  }
-
-  &__content {
-    padding: 15px;
-  }
-
-  &__title {
-    font-size: 1.2rem;
+  &__count {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none; // 初期は非表示
+    background-color: #e63946;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
     font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 5px;
+    text-align: center;
+    min-width: 20px;
   }
 
-  &__description {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 10px;
-  }
+  &__image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+  &__content { padding: 15px; }
+  &__title { font-size: 1.2rem; font-weight: bold; margin: 0 0 5px; }
+  &__description { font-size: 1rem; color: #666; margin-bottom: 10px; }
+  &__price { font-size: 1.1rem; font-weight: bold; color: $color-primary; }
+  &__cart-icon { width: 35px; height: 35px; }
 
-  &__price {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: $color-primary;
-  }
-
-  &__add-to-cart {
+  .product-card__add-to-cart {
+    position: relative; 
     background-color: transparent;
     border: none;
     cursor: pointer;
     float: right;
     margin-bottom: 5px;
+
+    .product-card__count {
+      position: absolute;
+      top: -10px;
+      right: 17px; 
+      display: none; // 初期は非表示
+      background-color: #e63946;
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      min-width: 18px;
+      line-height: 1.2;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
   }
 
-  &__cart-icon {
-    width: 35px;
-    height: 35px;
-  }
 }
+
 
 // はじめての方へ (beginner-info)
 .beginner-info {
@@ -240,6 +321,11 @@ img {
     display: flex;
     max-width: $container-width;
     margin: 0 auto;
+  }
+
+  /* レスポンシブ（小さい画面では1列） */
+  @media (max-width: 600px) {
+    &__inner { flex-direction: column;}
   }
 
   &__logo {
