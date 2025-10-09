@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // ========================
   // カルーセル機能
   // ========================
@@ -27,53 +27,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================
-  // 商品データ読込完了イベント
+  // 商品データ読込（JSON）
   // ========================
-  document.addEventListener("productsLoaded", () => {
-    const products = window.productsData;
+  try {
+    const response = await fetch("./data/products.json");
+    const products = await response.json();
+    window.productsData = products; // 他ファイル(cart.jsなど)でも使えるように
+
     const container = document.querySelector(".products__grid");
+    if (container) {
+      container.innerHTML = ""; // 一旦リセット
 
-    if (!container || !products) return;
+      products.forEach(p => {
+        const card = document.createElement("article");
+        card.classList.add("product-card");
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" class="product-card__image">
+          <div class="product-card__content">
+            <h3 class="product-card__title">${p.title}</h3>
+            <p class="product-card__description">${p.description}</p>
+            <p class="product-card__price">¥${p.price}(税込)</p>
+            <button class="product-card__add-to-cart" aria-label="カートに入れる">
+              <span class="product-card__count">0</span>
+              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
 
-    // 商品カード生成
-    container.innerHTML = ""; // 一度クリアしてから生成
-    products.forEach(p => {
-      const card = document.createElement("article");
-      card.classList.add("product-card");
-      card.innerHTML = `
-        <img src="${p.img}" alt="${p.title}" class="product-card__image">
-        <div class="product-card__content">
-          <h3 class="product-card__title">${p.title}</h3>
-          <p class="product-card__description">${p.description}</p>
-          <p class="product-card__price">¥${p.price}(税込)</p>
-          <button class="product-card__add-to-cart" aria-label="カートに入れる">
-            <span class="product-card__count">0</span>
-            <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-          </button>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-
-    // カート機能を初期化
-    initCartFeature();
-  });
+    // 商品生成完了後にカート機能を初期化
+    initCartFeature(products);
+  } catch (error) {
+    console.error("商品データの読み込みに失敗しました:", error);
+  }
 
   // ========================
   // カート機能
   // ========================
-  function initCartFeature() {
+  function initCartFeature(products) {
     const cartCountElement = document.querySelector(".cart-count");
     const addToCartButtons = document.querySelectorAll(".product-card__add-to-cart");
 
     let totalCount = Number(localStorage.getItem("totalCartCount")) || 0;
     let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    // 初期表示
+    // 初期表示（合計数）
     if (cartCountElement) cartCountElement.textContent = totalCount;
 
     addToCartButtons.forEach((button, i) => {
-      const product = window.productsData[i];
+      const product = products[i];
       const cardCountElement = button.querySelector(".product-card__count");
       const currentItem = cartItems.find(x => x.title === product.title);
       let cardCount = currentItem ? currentItem.count : 0;
@@ -94,7 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
           existing.count++;
           cardCount = existing.count;
         } else {
-          cartItems.push({ title: product.title, price: product.price, count: 1 });
+          cartItems.push({
+            title: product.title,
+            price: product.price,
+            img: product.img,
+            count: 1
+          });
           cardCount = 1;
         }
 
@@ -102,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cardCountElement.textContent = cardCount;
         cardCountElement.style.display = "inline-block";
 
-        // 保存
+        // localStorage に保存
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
         localStorage.setItem("totalCartCount", totalCount);
       });

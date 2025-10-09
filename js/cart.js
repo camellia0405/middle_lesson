@@ -1,5 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("productsLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // ===============================
+  // 商品データを読み込み（JSON）
+  // ===============================
+  try {
+    const response = await fetch("./data/products.json");
+    window.productsData = await response.json();
+    initCartPage();
+  } catch (error) {
+    console.error("商品データの読み込みに失敗しました:", error);
+  }
+
+  // ===============================
+  // カートページ初期化関数
+  // ===============================
+  function initCartPage() {
     const allProducts = window.productsData;
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const cartContainer = document.getElementById("cart-items");
@@ -8,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearButton = document.getElementById("clear-cart");
 
     // カートが空の場合
+    if (!cartContainer || !totalPriceElement) return;
     if (cartItems.length === 0) {
       emptyMessage.style.display = "block";
       totalPriceElement.textContent = "合計金額：¥0";
@@ -27,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cartItems.forEach((item, index) => {
         const product = allProducts.find(p => p.title === item.title);
         const price = product ? product.price : item.price;
-        const image = product ? product.img : "./img/noimage.png"; // 商品画像を取得
+        const image = product ? product.img : "./img/noimage.png"; // 画像フォールバック
         const subtotal = price * item.count;
         total += subtotal;
 
@@ -39,11 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="cart__item-info">
             <p class="cart__title">${item.title}</p>
-            <p class="cart__price">単価：¥${price}</p>
+            <p class="cart__price">単価：¥${price.toLocaleString()}</p>
             <p class="cart__count">数量：${item.count}</p>
             <p class="cart__subtotal">小計：¥${subtotal.toLocaleString()}</p>
           </div>
-          <button class="cart__delete" data-index="${index}">削除</button>
+	  <button class="cart__delete" data-index="${index}">削除</button>
         `;
         cartContainer.appendChild(div);
       });
@@ -91,17 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===============================
     // 「カートを空にする」ボタン機能
     // ===============================
-    clearButton.addEventListener("click", () => {
-      if (confirm("カートを空にしますか？")) {
-        localStorage.removeItem("cartItems");
-        localStorage.setItem("totalCartCount", 0);
-        cartContainer.innerHTML = "";
-        totalPriceElement.textContent = "合計金額：¥0";
-        emptyMessage.style.display = "block";
+    if (clearButton) {
+      clearButton.addEventListener("click", () => {
+        if (confirm("カートを空にしますか？")) {
+          localStorage.removeItem("cartItems");
+          localStorage.setItem("totalCartCount", 0);
+          cartContainer.innerHTML = "";
+          totalPriceElement.textContent = "合計金額：¥0";
+          emptyMessage.style.display = "block";
 
-        const cartCountElement = document.querySelector(".cart-count");
-        if (cartCountElement) cartCountElement.textContent = "0";
-      }
-    });
-  });
+          const cartCountElement = document.querySelector(".cart-count");
+          if (cartCountElement) cartCountElement.textContent = "0";
+        }
+      });
+    }
+  }
 });
