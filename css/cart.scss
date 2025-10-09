@@ -8,67 +8,142 @@
     margin-bottom: 30px;
   }
 
+  /* 商品ブロック（横並び） */
   &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 60px;
     border-bottom: 1px solid #ddd;
-    padding: 15px;
+    padding: 15px 0;
+    text-align: left;
   }
 
-  &__title {
-    font-weight: bold;
+  /* 左側の画像エリア */
+  &__item-image {
+    width: 315px;
+    height: 315px;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
   }
 
-  &__price, &__count {
-    color: #555;
+  /* 右側の情報エリア */
+  &__item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .cart__title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .cart__price,
+    .cart__count {
+      color: #555;
+      font-size: 1.25rem;
+    }
+
+    .cart__subtotal {
+      font-weight: bold;
+      color: #000;
+      opacity: 0.8;
+      font-size: 1.25rem;
+    }
+  }
+  /* 削除ボタン*/
+  .cart__delete {
+    margin-top: 8px;
+    background-color: #e63946;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s ease;
+
+    &:hover {
+      background-color: darken(#e63946, 10%);
+    }
   }
 
+  /* カートが空のときのメッセージ */
   &__empty {
     color: #888;
     margin-top: 40px;
+    font-size: 1rem;
   }
 
+  /* 合計金額エリア */
+  &__summary {
+    margin-top: 30px;
+    text-align: right;
+
+    #total-price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .cart__clear {
+      background-color: #1B2E5E;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: darken(#1B2E5E, 10%);
+      }
+    }
+  }
+
+  /* 「買い物に戻る」リンク */
   &__back {
     display: inline-block;
     margin-top: 30px;
-    color: #8e7d73;
-  }
-}
+    color: #1B2E5E;
+    text-decoration: underline;
+    font-size: 0.95rem;
 
-.cart__summary {
-  margin-top: 30px;
-  font-size: 1.2rem;
-
-  #total-price {
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-
-  .cart__clear {
-    background-color: #e63946;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
     &:hover {
-      background-color: #c92a38;
+      color: darken(#1B2E5E, 10%);
     }
   }
 }
 
-.cart__delete {
-  background-color: #ccc;
-  border: none;
-  padding: 6px 12px;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #999;
-  }
-}
+/* ✅ スマホ表示（縦並び） */
+@media (max-width: 600px) {
+  .cart__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
-.cart__subtotal {
-  font-weight: bold;
-  color: #444;
+    .cart__item-image {
+      width: 100px;
+      height: 100px;
+    }
+
+    .cart__item-info {
+      align-items: center;
+      .cart__delete {
+        align-self: center;
+      }
+    }
+  }
+
+  .cart__summary {
+    text-align: center;
+  }
 }

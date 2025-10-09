@@ -1,0 +1,8 @@
+[
+  { "id": 1, "title": "苺のプリン", "price": 240, "description": "とちおとめをふんだんに使ったミルクプリンです。", "img": "./img/strawberry.png" },
+  { "id": 2, "title": "抹茶のプリン", "price": 240, "description": "宇治抹茶の濃厚な香りを楽しめる逸品です。", "img": "./img/greentea.png" },
+  { "id": 3, "title": "バナナのプリン", "price": 240, "description": "完熟バナナの甘みとつぶつぶの食感を味わえます。", "img": "./img/banana.png" },
+  { "id": 4, "title": "かぼちゃのプリン", "price": 240, "description": "かぼちゃの優しい甘さを感じられ、甘いのが苦手な方にもおすすめです。", "img": "./img/pumpkin.png" },
+  { "id": 5, "title": "桜マカロン", "price": 180, "description": "自家製シロップ漬けのクリームを挟んだ可愛いマカロンです。", "img": "./img/season_sakura01.jpg" },
+  { "id": 6, "title": "春菊のケークサレ", "price": 500, "description": "フランス発祥の野菜のケーキです。クリームチーズと一緒にぜひ！", "img": "./img/season_shungiku01.jpg" }
+]
