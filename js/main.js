@@ -1,120 +1,136 @@
+// js/main.js
+import { getProducts } from './products.js';
+import {
+  loadCartItems,
+  saveCartItems,
+  loadTotalCount,
+  saveTotalCount,
+  updateCartBadge
+} from './cartStore.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
-  // ========================
-  // カルーセル機能
-  // ========================
+  initCarousel();
+
+  try {
+    const products = await getProducts();
+    renderProductCards(products);
+    initAddToCart(products);
+    updateCartBadge(); // 右上バッジ初期表示
+  } catch (e) {
+    console.error('商品データの読み込みに失敗しました:', e);
+  }
+});
+
+/**
+ * カルーセル初期化
+ */
+function initCarousel() {
   const items = document.querySelectorAll('.carousel__item');
   const nextButton = document.querySelector('.carousel__button--next');
   const prevButton = document.querySelector('.carousel__button--prev');
   let currentIndex = 0;
 
+  if (!items.length || !nextButton || !prevButton) return;
+
   function showSlide(index) {
-    items.forEach(item => item.style.display = 'none');
+    items.forEach(item => (item.style.display = 'none'));
     items[index].style.display = 'block';
   }
 
-  if (nextButton && prevButton && items.length > 0) {
-    nextButton.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % items.length;
-      showSlide(currentIndex);
-    });
-
-    prevButton.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      showSlide(currentIndex);
-    });
-
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % items.length;
     showSlide(currentIndex);
-  }
+  });
 
-  // ========================
-  // 商品データ読込（JSON）
-  // ========================
-  try {
-    const response = await fetch("./data/products.json");
-    const products = await response.json();
-    window.productsData = products; // 他ファイル(cart.jsなど)でも使えるように
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    showSlide(currentIndex);
+  });
 
-    const container = document.querySelector(".products__grid");
-    if (container) {
-      container.innerHTML = ""; // 一旦リセット
+  showSlide(currentIndex);
+}
 
-      products.forEach(p => {
-        const card = document.createElement("article");
-        card.classList.add("product-card");
-        card.innerHTML = `
-          <img src="${p.img}" alt="${p.title}" class="product-card__image">
-          <div class="product-card__content">
-            <h3 class="product-card__title">${p.title}</h3>
-            <p class="product-card__description">${p.description}</p>
-            <p class="product-card__price">¥${p.price}(税込)</p>
-            <button class="product-card__add-to-cart" aria-label="カートに入れる">
-              <span class="product-card__count">0</span>
-              <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
-            </button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
+/**
+ * 商品一覧を生成して表示
+ */
+function renderProductCards(products) {
+  const container = document.querySelector('.products__grid');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  products.forEach(p => {
+    const card = document.createElement('article');
+    card.classList.add('product-card');
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.title}" class="product-card__image">
+      <div class="product-card__content">
+        <h3 class="product-card__title">${p.title}</h3>
+        <p class="product-card__description">${p.description}</p>
+        <p class="product-card__price">¥${p.price}(税込)</p>
+        <button class="product-card__add-to-cart" aria-label="カートに入れる">
+          <span class="product-card__count">0</span>
+          <img src="./img/cart.png" alt="カートアイコン" class="product-card__cart-icon">
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+/**
+ * 「カートに入れる」ボタンのイベント設定
+ */
+function initAddToCart(products) {
+  const buttons = document.querySelectorAll('.product-card__add-to-cart');
+  if (!buttons.length) return;
+
+  let cartItems = loadCartItems();
+  let totalCount = loadTotalCount();
+
+  // カード側の個数バッジ初期反映
+  buttons.forEach((button, i) => {
+    const product = products[i];
+    const badge = button.querySelector('.product-card__count');
+    const currentItem = cartItems.find(item => item.title === product.title);
+    const count = currentItem ? currentItem.count : 0;
+
+    if (count > 0 && badge) {
+      badge.textContent = count;
+      badge.style.display = 'inline-block';
     }
+  });
 
-    // 商品生成完了後にカート機能を初期化
-    initCartFeature(products);
-  } catch (error) {
-    console.error("商品データの読み込みに失敗しました:", error);
-  }
+  updateCartBadge(totalCount);
 
-  // ========================
-  // カート機能
-  // ========================
-  function initCartFeature(products) {
-    const cartCountElement = document.querySelector(".cart-count");
-    const addToCartButtons = document.querySelectorAll(".product-card__add-to-cart");
+  buttons.forEach((button, i) => {
+    const product = products[i];
+    const badge = button.querySelector('.product-card__count');
 
-    let totalCount = Number(localStorage.getItem("totalCartCount")) || 0;
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    button.addEventListener('click', () => {
+      totalCount += 1;
+      saveTotalCount(totalCount);
+      updateCartBadge(totalCount);
 
-    // 初期表示（合計数）
-    if (cartCountElement) cartCountElement.textContent = totalCount;
-
-    addToCartButtons.forEach((button, i) => {
-      const product = products[i];
-      const cardCountElement = button.querySelector(".product-card__count");
-      const currentItem = cartItems.find(x => x.title === product.title);
-      let cardCount = currentItem ? currentItem.count : 0;
-
-      // 初期表示反映
-      if (cardCount > 0) {
-        cardCountElement.textContent = cardCount;
-        cardCountElement.style.display = "inline-block";
+      const existing = cartItems.find(item => item.title === product.title);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cartItems.push({
+          title: product.title,
+          price: product.price,
+          img: product.img,
+          count: 1
+        });
       }
 
-      // カート追加イベント
-      button.addEventListener("click", () => {
-        totalCount++;
-        if (cartCountElement) cartCountElement.textContent = totalCount;
+      saveCartItems(cartItems);
 
-        const existing = cartItems.find(x => x.title === product.title);
-        if (existing) {
-          existing.count++;
-          cardCount = existing.count;
-        } else {
-          cartItems.push({
-            title: product.title,
-            price: product.price,
-            img: product.img,
-            count: 1
-          });
-          cardCount = 1;
-        }
-
-        // 個別表示更新
-        cardCountElement.textContent = cardCount;
-        cardCountElement.style.display = "inline-block";
-
-        // localStorage に保存
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        localStorage.setItem("totalCartCount", totalCount);
-      });
+      const currentItem = cartItems.find(item => item.title === product.title);
+      if (badge && currentItem) {
+        badge.textContent = currentItem.count;
+        badge.style.display = 'inline-block';
+      }
     });
-  }
-});
+  });
+}

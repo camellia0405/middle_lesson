@@ -130,7 +130,7 @@ img {
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* レスポンシブ（小さい画面ではアイコン小さめ、右下表示） */
+/* レスポンシブ */
 @media (max-width: 600px) {
   .header__icons { top: auto; bottom: 30px; right: 20px; }
   .header__icon-image { width: 36px; height: 36px; }
@@ -188,7 +188,7 @@ img {
 
 /* レスポンシブ（小さい画面では非表示） */
 @media (max-width: 600px) {
-  .main-visual { 
+  .hero-visual { 
     display: none;
   }
 }

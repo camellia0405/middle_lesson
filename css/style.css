@@ -109,7 +109,7 @@ img {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* レスポンシブ（小さい画面ではアイコン小さめ、右下表示） */
+/* レスポンシブ */
 @media (max-width: 600px) {
   .header__icons {
     top: auto;
