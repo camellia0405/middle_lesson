@@ -4,9 +4,9 @@ import {
   loadCartItems,
   saveCartItems,
   loadTotalCount,
-  saveTotalCount,
-  updateCartBadge
+  saveTotalCount
 } from './cartStore.js';
+import { updateCartBadge } from './common.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   initCarousel();
@@ -15,15 +15,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const products = await getProducts();
     renderProductCards(products);
     initAddToCart(products);
-    updateCartBadge(); // 右上バッジ初期表示
+    updateCartBadge(); // 右上バッジ初期表示（localStorageから）
   } catch (e) {
     console.error('商品データの読み込みに失敗しました:', e);
   }
 });
 
-/**
- * カルーセル初期化
- */
 function initCarousel() {
   const items = document.querySelectorAll('.carousel__item');
   const nextButton = document.querySelector('.carousel__button--next');
@@ -50,9 +47,6 @@ function initCarousel() {
   showSlide(currentIndex);
 }
 
-/**
- * 商品一覧を生成して表示
- */
 function renderProductCards(products) {
   const container = document.querySelector('.products__grid');
   if (!container) return;
@@ -78,9 +72,6 @@ function renderProductCards(products) {
   });
 }
 
-/**
- * 「カートに入れる」ボタンのイベント設定
- */
 function initAddToCart(products) {
   const buttons = document.querySelectorAll('.product-card__add-to-cart');
   if (!buttons.length) return;
@@ -95,8 +86,8 @@ function initAddToCart(products) {
     const currentItem = cartItems.find(item => item.title === product.title);
     const count = currentItem ? currentItem.count : 0;
 
-    if (count > 0 && badge) {
-      badge.textContent = count;
+    if (badge && count > 0) {
+      badge.textContent = String(count);
       badge.style.display = 'inline-block';
     }
   });
@@ -128,7 +119,7 @@ function initAddToCart(products) {
 
       const currentItem = cartItems.find(item => item.title === product.title);
       if (badge && currentItem) {
-        badge.textContent = currentItem.count;
+        badge.textContent = String(currentItem.count);
         badge.style.display = 'inline-block';
       }
     });

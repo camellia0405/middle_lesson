@@ -1,16 +1,12 @@
 // js/products.js
-let productsCache = null;
+let cache = null;
 
-/**
- * 商品一覧を取得する（キャッシュ付き）
- */
 export async function getProducts() {
-  if (productsCache) return productsCache;
+  if (cache) return cache;
 
   const res = await fetch('./data/products.json');
-  if (!res.ok) {
-    throw new Error('商品データの取得に失敗しました');
-  }
-  productsCache = await res.json();
-  return productsCache;
+  if (!res.ok) throw new Error(`products.json fetch failed: ${res.status}`);
+
+  cache = await res.json();
+  return cache;
 }

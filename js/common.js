@@ -1,15 +1,12 @@
-// ===============================
-// 共通データ管理 (1回だけ読み込み)
-// ===============================
-if (!window.productsData) {
-  fetch('./data/products.json')
-    .then(res => res.json())
-    .then(data => {
-      window.productsData = data; // 全ページ共通で使えるようにする
-      console.log("✅ 商品データを読み込みました", window.productsData);
+// js/common.js
+import { loadTotalCount } from './cartStore.js';
 
-      // 初期化イベントを発火して他JSに通知
-      document.dispatchEvent(new CustomEvent("productsLoaded"));
-    })
-    .catch(err => console.error("商品データの読み込みエラー:", err));
+/**
+ * ヘッダーのカートバッジを更新
+ * @param {number} [count] 指定がなければlocalStorageから読む
+ */
+export function updateCartBadge(count = loadTotalCount()) {
+  const el = document.querySelector('.cart-count');
+  if (!el) return;
+  el.textContent = String(count);
 }
