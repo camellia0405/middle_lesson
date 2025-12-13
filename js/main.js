@@ -1,4 +1,5 @@
 // js/main.js
+import { initCarousel } from './carousel.js';
 import { getProducts } from './products.js';
 import {
   loadCartItems,
@@ -15,37 +16,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const products = await getProducts();
     renderProductCards(products);
     initAddToCart(products);
-    updateCartBadge(); // 右上バッジ初期表示（localStorageから）
+    updateCartBadge();
   } catch (e) {
     console.error('商品データの読み込みに失敗しました:', e);
   }
 });
-
-function initCarousel() {
-  const items = document.querySelectorAll('.carousel__item');
-  const nextButton = document.querySelector('.carousel__button--next');
-  const prevButton = document.querySelector('.carousel__button--prev');
-  let currentIndex = 0;
-
-  if (!items.length || !nextButton || !prevButton) return;
-
-  function showSlide(index) {
-    items.forEach(item => (item.style.display = 'none'));
-    items[index].style.display = 'block';
-  }
-
-  nextButton.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % items.length;
-    showSlide(currentIndex);
-  });
-
-  prevButton.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    showSlide(currentIndex);
-  });
-
-  showSlide(currentIndex);
-}
 
 function renderProductCards(products) {
   const container = document.querySelector('.products__grid');
