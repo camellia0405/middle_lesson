@@ -39,20 +39,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 「カートに入れる」ボタンのイベントを設定
     initAddToCart(products);
-
-    // 右上のカート個数バッジを初期表示
-    //（localStorageの値をもとに表示）
-    updateCartBadge();
+    updateCartBadge(); // 右上バッジ初期表示（localStorageから）
   } catch (e) {
     console.error('商品データの読み込みに失敗しました:', e);
   }
 });
 
+function initCarousel() {
+  const items = document.querySelectorAll('.carousel__item');
+  const nextButton = document.querySelector('.carousel__button--next');
+  const prevButton = document.querySelector('.carousel__button--prev');
+  let currentIndex = 0;
 
-// ===============================
-// 商品カード描画処理
-// ===============================
-// products.json の内容を元に、商品カードHTMLを生成する
+  if (!items.length || !nextButton || !prevButton) return;
+
+  function showSlide(index) {
+    items.forEach(item => (item.style.display = 'none'));
+    items[index].style.display = 'block';
+  }
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % items.length;
+    showSlide(currentIndex);
+  });
+
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    showSlide(currentIndex);
+  });
+
+  showSlide(currentIndex);
+}
+
 function renderProductCards(products) {
   const container = document.querySelector('.products__grid');
   if (!container) return;

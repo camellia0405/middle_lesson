@@ -16,6 +16,7 @@ import { loadTotalCount } from './cartStore.js';
  *   updateCartBadge(3);  // 強制的に「3」を表示
  *   updateCartBadge();   // localStorage の値を表示
  */
+
 export function updateCartBadge(count = loadTotalCount()) {
   // ヘッダー内のカート件数表示要素を取得
   const el = document.querySelector('.cart-count');
